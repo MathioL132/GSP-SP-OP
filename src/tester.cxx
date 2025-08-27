@@ -4,6 +4,10 @@
 #include <fstream>
 #include <iostream>
 #include <filesystem>
+#include "sp_validation_tests.hxx"
+#include "sp_visualization.hxx"
+#include "GraphGenerator.hxx"
+
 
 int main(int argc, char * argv[]) {
 	if (argc < 2) return 1;
