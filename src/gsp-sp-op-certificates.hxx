@@ -866,7 +866,7 @@ struct gsp_sp_op_result {
 	std::shared_ptr<certificate> sp_reason;
 	std::shared_ptr<certificate> op_reason;
 
-	bool authenticate(graph const& g) {
+	bool authenticate(graph const& g) const {
 		//int useless = 1;
 		L_LOG("================== AUTHENTICATING GSP-SP-OP RESULT ==================\n") 
 		V_LOG(g)
