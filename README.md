@@ -76,3 +76,60 @@ Some command-line options can be given to the compiler when the code is compiled
 ## Caveats
 * The implementation assumes the graph is simple (contains no multiple edges or self-loops) and connected, and will fail if this is not the case. It would be trivial to modify it to handle disconnected/multigraphs, so I have been told not to bother doing this
 * The random graph generator only generates biconnected graphs (since it connects every subgraph it generates to the rest of the graph with two edges). This means the code is pretty poorly tested on non-biconnected graphs, and some bugs may still exist in the part of the code which handles non-biconnected graphs. The implementation works for every non-biconnected corner case I could come up with, though, and I've gone ahead and manually modified a few big randomly generated graphs to be non-biconnected, so it should hopefully be fine.
+
+
+## Additions 
+These are the additions made by Mathio Luca.
+The extension implements five core validation tasks designed to thoroughly test the robustness and correctness of the SP classification algorithm:
+
+Random Graph Generation: Systematic exploration of graph parameter space using the existing GraphGenerator.hxx
+Certificate Authentication: Comprehensive validation using the existing authentication framework
+Representation Invariance: Testing algorithm consistency across different graph representations
+Starting Point Independence: Verifying algorithm results are independent of traversal starting points
+Visualization & Analysis: Complete visualization suite with decomposition tree rendering and detailed analysis reports
+Extended Compilation and Execution
+clang++ -std=c++20 -Wall -Wextra sp_complete_tester.cxx -o tester
+
+The extension provides a single  testing file:
+
+sp_complete_tester.cxx
+
+
+Extension Features
+Systematic Graph Generation
+The extension uses the existing GraphGenerator.hxx with carefully chosen parameter combinations to explore different graph structures:
+
+Mixed cycle-clique combinations for complexity testing
+Variable density configurations
+Scalable graph sizes (300-550+ vertices)
+Reproducible seeded generation for debugging
+Comprehensive Validation Testing
+Each generated graph undergoes rigorous validation:
+
+Certificate Authentication: Verifies all certificates using result.authenticate(g)
+Vertex Labeling Invariance: Tests algorithm consistency under vertex relabeling
+Edge Ordering Invariance: Verifies independence from adjacency list ordering
+Multiple Root Invariance: Confirms results don't depend on DFS starting vertex
+Structural Validation: Validates graph integrity and reciprocal edge consistency
+Advanced Visualization System
+The extension generates comprehensive visualization outputs for each test case:
+
+Graph Structure Diagrams: DOT/PNG visualizations of graph topology
+Certificate Diagrams: Visual representation of algorithm results and certificate types
+SP Decomposition Trees: Detailed visualization of series-parallel decomposition structures (when applicable)
+Analysis Reports: Comprehensive text-based analysis including graph properties, algorithm results, and validation outcomes
+Generated Output Files
+For each test case with base name <test_name>, the extension generates:
+
+<test_name>_graph.png - Graph structure visualization
+<test_name>_certificate.png - Certificate and result diagram
+<test_name>_sp_tree.png - SP decomposition tree visualization
+<test_name>_analysis.txt - Detailed analysis report
+<test_name>_*.dot - DOT source files for all visualizations
+Visualization Dependencies
+PNG generation requires Graphviz installation:
+
+Ubuntu/Debian: sudo apt-get install graphviz
+macOS: brew install graphviz
+Windows: Download from https://graphviz.org/
+If Graphviz is not available, DOT source files are still generated and can be processed separately.
